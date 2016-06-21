@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Curs de Python</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+<h2>Curs de Python</h2>
+<pre><code class="python3" data-trim>
+print "Welcome to Python"  # Python 2
+print("Welcome to Python3!")  # Python 3
+</code></pre>
+                </section>
+				<section>
+<h2>Python for Java/C++ programmers</h2>
+<p>Regular functions and basic statements</p>
+<pre><code class="java" data-trim>
+// Exemple Java
+final void awesomeFunction(List&lt;AwesomeType> awesomeVariable) {
+    awesomeStatement();
+    awesomeVariable.loremIpsum(3, new HashMap&lt;AwesomeType>());
+    
+    return new ArrayList&lt;String>();
+}
+</code></pre>
+<pre class="fragment"><code class="python" data-trim>
+# Exemple Python
+def awesome_function(awesome_variable):
+    awesome_statement()
+    awesome_variable.lorem_ipsum(3, dict())
+    
+    return list()
+</code></pre>
+                </section>
+                <section>
+<h2>Python for Java/C++ programmers</h2>
+<p>Code documentation</p>
+<pre><code class="java" data-trim>
+/**
+ * @brief Típica documentació, estil Javadoc (si no vaig errat).
+ * @param awesomeVariable Té valors impressionants.
+ * @return Una llista buida. Per què? Perquè sí.
+ *
+ * Més informació i documentació aquí!
+ */
+final void awesomeFunction(List&lt;AwesomeType> awesomeVariable) {
+    ...
+</code></pre>
+<pre class="fragment"><code class="python" data-trim>
+def awesome_function(awesome_variable):
+    """Típica documentació per a un mètode Python.
+    :param awesome_variable: Té valors impressionants.
+    :return: Una llista buida. Per què? Perquè sí.
+    
+    Més informació i documentació aquí!
+    """
+    ...
+</code></pre>
+                </section>
+                <section>
+<h2>Python for Java/C++ programmers</h2>
+<p>For loops and conditionals</p>
+<pre><code class="java">    for (String s : awesomeList) {
+        if (s.equals("AwesomeString")) {
+            break;
+        } else if (s.equals("NotAwesome")) {
+            continue;
+        }
+        c++;
+    }
+</code></pre>
+<pre class="fragment"><code class="python" >    for s in awesome_list:
+        if s == "AwesomeString":
+            break
+        elif s == "NotAwesome":
+            continue
+        c += 1
+</code></pre>
+                </section>
+                <section>
+<h2>Duck Typing</h2>
+<p>O també conegut com les tonteries del Barceló i els "patos"</p>
+<pre><code class="python" data-trim>
+# Codi Python
+def feelsLikeList(l):
+    l.append(32)
+    if len(l) &lt; 8:
+        l.append(42)
+        feelsLikeList(l)
+    return l[4]
+</code></pre>
+<span class="fragment">
+<p>Relevància del tipus de <code>l</code>: cap</p>
+<p>"Si grazna como un pato, camina como un pato, etc."</p>
+</span>
+                </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

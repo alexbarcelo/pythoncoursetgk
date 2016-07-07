@@ -79,7 +79,7 @@ def awesome_function(awesome_variable):
                 </section>
                 <section>
 <h2>Python for Java/C++ programmers</h2>
-<p>For loops and conditionals</p>
+<p><code>for</code> loops and conditionals</p>
 <pre><code class="java">    for (String s : awesomeList) {
         if (s.equals("AwesomeString")) {
             break;
@@ -111,9 +111,86 @@ def feelsLikeList(l):
 </code></pre>
 <span class="fragment">
 <p>Relevància del tipus de <code>l</code>: cap</p>
-<p>"Si grazna como un pato, camina como un pato, etc."</p>
+<p>"Don't check whether it <b>IS-a duck</b>: check whether it <b>QUACKS-like-a duck</b>, <b>WALKS-like-a duck</b>, etc"</p>
 </span>
                 </section>
+                <section>
+<h2>Duck Typing</h2>
+<p>A què venia això?</p><p><code>isinstance</code> is <b>evil</b></p>
+<pre><code class="python" data-trim>
+# Codi Python
+def beingTooCautious(l):
+    assert isinstance(l, list)  # Bad! anti-pythonic idiom!
+    ...
+</code></pre>
+Si és imperatiu realitzar comprovacions, <code>try-catch</code>
+<pre><code class="python" data-trim>
+# Codi Python
+def beingSafeAndPythonic(l):
+    try:
+        l.append(32)
+    except AttributeError:
+        # Gestionem aquí l'error
+        ...
+    else:
+        # Tot ha anat bé
+        ...
+</code></pre>
+                </section>
+<section> <!-- Python Ecosystem parent -->
+                <section>
+<h2>Python Ecosystem</h2>
+<p>Gran quantitat de recursos de tot tipus</p>
+<ul>
+    <li>Documentació</li>
+    <li>Eines</li>
+    <li>Paquets i mòduls</li>
+    <li>Frameworks</li>
+    <li>Projectes</li>
+</ul>
+<p><i>Get ready for an opinionated list by Barceló</i></br><small>(o poseu-vos a dormir)</small></p>
+                </section>
+                <section>
+<h2>Python Ecosystem</h2><h4>Documentació</h4>
+<p>First and foremost: <a href="https://docs.python.org/" target="_blank">https://docs.python.org/</a></p>
+<ul>
+    <li>El tutorial està molt bé</li>
+    <li>Brief Tour of the Standard Library és un bon repàs no-exhaustiu</li>
+    <li>La documentació de la Standard Library és més tècnica, però detallada i completa</li>
+</ul>
+<p>En general, la documentació és bona</br>Comproveu sempre la documentació oficial (GitHub, ReadTheDocs, etc.)</p>
+                </section>
+                <section>
+<h2>Python Ecosystem</h2><h4>Eines</h4>
+<img src="img/ipython.png" style="padding: 30px; background: white;"></img>
+<p><b><code>iPython</code></b>&emsp;És una consola interactiva útil i potent</p>
+<p>(molt millor que l'intèrpret interactiu per defecte)</p>
+                </section>
+                <section>
+<h2>Python Ecosystem</h2><h4>Eines</h4>
+<div style="float: left;"><img src="img/pycharm.png"></img></div>
+<div>
+    <p><b>PyCharm</b>&emsp;És un IDE de programació, adequat per a projectes grans amb múltiples arxius</p>
+</div>
+                </section>
+                <section>
+<h2>Python Ecosystem</h2><h4>Eines</h4>
+<p><code>virtualenv</code> - <b>Virtual Environments</b></p>
+<p>Mecanisme per a tenir un <i>environment</i> aïllat</p>
+<p>Útil tant per a <b>development</b> com per a deployments a <b>producció</b></p>
+                </section>
+                <section>
+<h2>Python Ecosystem</h2><h4>Paquets i mòduls</h4>
+<p><b>PyPI</b>&emsp;the Python Package Index<br><a href="https://pypi.python.org/pypi">https://pypi.python.org/pypi</a></p>
+<p><b>GitHub</b>&emsp;Molts paquets, però pot ser "un pallar"</p>
+<span class="fragment">
+    <hr />
+    <p>En general: <b>Mai reinventeu la roda</b></p>
+    <p>Si existeix un paquet que fa el que voleu, probablement ho faci millor que el que faríeu vosaltres</p>
+    <p>Si vosaltres ho feu millor: coŀlaboreu-hi</p>
+</span>
+                </section>
+</section> <!-- parent section of Python Ecosystem -->
 			</div>
 		</div>
 

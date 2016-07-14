@@ -191,6 +191,118 @@ def beingSafeAndPythonic(l):
 </span>
                 </section>
 </section> <!-- parent section of Python Ecosystem -->
+                <section>
+<h2>Python Goodies: Use and Abuse</h2><h4>Comprehensions</h4>
+<p><b>List</b> comprehensions</p>
+<span class="fragment">
+    <pre><code class="python" data-trim>
+squares = [x**2 for x in range(10)]
+# squares ->  [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+powers_of_two = [2**x for x in range(10)]
+# powers_of_two -> [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+    </code></pre>
+</span>
+<span class="fragment">
+    <pre><code class="python" data-trim>
+fancy_filter = [x for x in squares if x in powers_of_two]
+# squares ->  [4, 16, 64]
+    </code></pre>
+</span>
+                </section>
+                <section>
+<h2>Python Goodies: Use and Abuse</h2><h4>Comprehensions</h4>
+<p><b>Dictionary</b> comprehensions</p>
+
+    <pre><code class="python" data-trim>
+noms = ["Alba", "Alex", "Arnau", "Bravo", "Charlie"]
+    </code></pre>
+<span class="fragment">
+    <pre><code class="python" data-trim>
+inicials = {n: n[0] for n in noms}
+# inicials -> {"Alba": "A", "Alex": "A" ... "Charlie": "C"}
+long_nom = {n: len(n) for n in noms}
+# long_nom -> {"Alba": 4, "Alex": 4, ... "Charlie": 7}
+    </code></pre>
+</span>
+                </section>
+                <section>
+<h2>Python Goodies: Use and Abuse</h2><h4>Compact misc semantics</h4>
+    <pre><code class="python" data-trim>
+a, b, c, d = False, None, "", []
+    </code></pre>
+<span class="fragment">
+    <pre><code class="python" data-trim>
+r = any((a, b, c, d))  # -> False
+r = b is None  # -> True 
+r = b is False  # -> False
+r = a or "spam"  # -> "spam"
+r = b or "eggs"  # -> "eggs"
+r = c or "bacon"  # -> "bacon"
+r = d or "spam"  # -> "spam"
+    </code></pre>
+</span>
+                </section>
+                <section>
+<h2>Python Goodies: Use and Abuse</h2><h4>Function <code>args</code> and <code>kwargs</code></h4>
+    <pre><code class="python" data-trim>
+def af(a, b, c, d=4, e="5", f=None, g={}):
+    g[d] = a
+    if f is not None:  # not exactly the same as `if f:`
+        g[e] = f
+    return g
+    </code></pre>
+<span class="fragment">
+    <p>Correct statements:</p>
+    <pre><code class="python" data-trim>
+af(1, 2, 3)  # <-- returns {4: 1}
+af(1, 2, 3, 4, 5)
+af(1, 2, 3, f=4, g={})
+af(1, 2, 3, f=5, e="4")
+af(a=1, b=2, c=3, d=4, e=5)
+    </code></pre>
+    <p>Also correct:</p>
+    <pre><code class="python" data-trim>
+args = (1, 2, 3)
+kwargs = {d=4, e=5, f=6, g={}}
+af(*args, **kwargs)
+    </code></pre>
+</span>
+                </section>
+                <section>
+<h2>Python Goodies: Use and Abuse</h2><h4>Function <code>args</code> and <code>kwargs</code></h4>
+    <pre><code class="python" data-trim>
+def af(a, b, c, d=4, e="5", f=None, g={}):
+    g[d] = a
+    if f is not None:  # not exactly the same as `if f:`
+        g[e] = f
+    return g
+    </code></pre>
+    <p>Incorrect statements:</p>
+    <pre><code class="python" data-trim>
+af()
+af(1, 2)
+af(1, 2, d=3)
+af(a=1, b=2, d=3)
+af(d=1, e=2, f=3)
+    </code></pre>
+    <p><b>Unexpected:</b></p>
+    <pre><code class="python" data-trim>
+af(1, 2, 3)  # <-- returns {4: 1, '4': 5} !!
+    </code></pre>
+    
+                </section>
+                <section>
+<h2>Python Goodies: Use and Abuse</h2><h4>Function <code>kwargs</code> fix</h4>
+    <pre><code class="python" data-trim>
+def awesome_func(a, b, c, d=4, e="5", f=None, g=None):
+    if g is None:
+        g = {}
+    g[d] = a
+    if f is not None:  # not exactly the same as `if f:`
+        g[e] = f
+    return g
+    </code></pre>
+                </section>
 			</div>
 		</div>
 

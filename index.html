@@ -97,6 +97,7 @@ def awesome_function(awesome_variable):
         c += 1
 </code></pre>
                 </section>
+<section> <!-- Duck Typing section -->
                 <section>
 <h2>Duck Typing</h2>
 <p>O també conegut com les tonteries del Barceló i els "patos"</p>
@@ -137,6 +138,7 @@ def beingSafeAndPythonic(l):
         ...
 </code></pre>
                 </section>
+</section> <!-- Duck Typing section -->
 <section> <!-- Python Ecosystem parent -->
                 <section>
 <h2>Python Ecosystem</h2>
@@ -158,7 +160,16 @@ def beingSafeAndPythonic(l):
     <li>Brief Tour of the Standard Library és un bon repàs no-exhaustiu</li>
     <li>La documentació de la Standard Library és més tècnica, però detallada i completa</li>
 </ul>
-<p>En general, la documentació és bona</br>Comproveu sempre la documentació oficial (GitHub, ReadTheDocs, etc.)</p>
+                </section>
+                <section>
+<h2>Python Ecosystem</h2><h4>Documentació</h4>
+<p>Good sources:</p>
+<ul>
+    <li>StackOverflow</li>
+    <li>Documentacions oficials de projectes<br /> (ReadTheDocs, GitHub, etc.)</li>
+    <li>El propi codi de les aplicacions</li>
+</ul>
+<p>En general:<br /> Programadors de Python deixen <b>bona</b> documentació</p>
                 </section>
                 <section>
 <h2>Python Ecosystem</h2><h4>Eines</h4>
@@ -191,6 +202,7 @@ def beingSafeAndPythonic(l):
 </span>
                 </section>
 </section> <!-- parent section of Python Ecosystem -->
+<section> <!-- Goodies - Comprehensions section -->
                 <section>
 <h2>Python Goodies: Use and Abuse</h2><h4>Comprehensions</h4>
 <p><b>List</b> comprehensions</p>
@@ -225,6 +237,7 @@ long_nom = {n: len(n) for n in noms}
     </code></pre>
 </span>
                 </section>
+</section> <!-- Goodies - Comprehensions section -->
                 <section>
 <h2>Python Goodies: Use and Abuse</h2><h4>Compact misc semantics</h4>
     <pre><code class="python" data-trim>
@@ -242,6 +255,7 @@ r = d or "spam"  # -> "spam"
     </code></pre>
 </span>
                 </section>
+<section> <!-- Goodies - args & kwargs section -->
                 <section>
 <h2>Python Goodies: Use and Abuse</h2><h4>Function <code>args</code> and <code>kwargs</code></h4>
     <pre><code class="python" data-trim>
@@ -263,7 +277,7 @@ af(a=1, b=2, c=3, d=4, e=5)
     <p>Also correct:</p>
     <pre><code class="python" data-trim>
 args = (1, 2, 3)
-kwargs = {d=4, e=5, f=6, g={}}
+kwargs = {d: 4, e: 5, f: 6, g: {}}
 af(*args, **kwargs)
     </code></pre>
 </span>
@@ -289,7 +303,6 @@ af(d=1, e=2, f=3)
     <pre><code class="python" data-trim>
 af(1, 2, 3)  # <-- returns {4: 1, '4': 5} !!
     </code></pre>
-    
                 </section>
                 <section>
 <h2>Python Goodies: Use and Abuse</h2><h4>Function <code>kwargs</code> fix</h4>
@@ -302,8 +315,11 @@ def awesome_func(a, b, c, d=4, e="5", f=None, g=None):
         g[e] = f
     return g
     </code></pre>
+<hr />
+<p>Lectura Recomanada: <i>"Immutable vs Mutable types"</i><br />(Pregunta de StackOverflow, llegiu la resposta)</p>
                 </section>
-			</div>
+</section> <!-- Goodies - args & kwargs section -->
+            </div>
 		</div>
 
 		<script src="lib/js/head.min.js"></script>

@@ -1,0 +1,56 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\author{Alex Barceló}
+\title{Curs de Python -- Telecogresca \\ {\sc Aplicació de frases de benvinguda}}
+\begin{document}
+\maketitle
+
+\setcounter{section}{-1}
+\section{Preparació del \texttt{virtualenv}}
+
+Començarem per preparar un \verb+virtualenv+. Això ho farem per assegurar-nos de no ``contaminar'' el sistema amb els paquets (i les versions) que desitgem insta\lgem{}ar.
+
+En el següents exemples suposaré que la carpeta de l'usuari és el directori de treball i el lloc desitjat on treballar.
+
+Si encara no tenim el mòdul \verb+virtualenv+ el podem aconseguir:
+\begin{itemize}
+\item En \textbf{Ubuntu} a través del paquet \verb+virtualenv+.
+\item En general, podem insta\lgem{}ar el mòdul a tot el sistema mitjançant la comanda \verb+sudo pip install virtualenv+
+\end{itemize}
+
+Per a crear la carpeta que serà el nostre \emph{virtual environment} només cal executar:
+
+\begin{verbatim}
+~ $ virtualenv tgkenv
+~ $ source tgkenv/bin/activate
+(tgkenv) ~ $ echo "Look mom, I am in a virtualenv!"
+\end{verbatim}
+
+La segona comanda s'encarrega d'assegurar que l'intèrpret de Python ``actiu'' serà el de l'entorn virtual, i no el de sistema.
+
+Ja podem obtenir el Django simplement utilitzant la comanda \verb+pip+ (sense \verb+sudo+! aquesta és una de les avantatges del \verb+virtualenv+).
+
+\begin{verbatim}
+(tgkenv) ~ $ pip install django==1.9
+\end{verbatim}
+
+\section{Inici del projecte}
+
+[Nota: assegureu-vos de tenir el \verb+virtualenv+ actiu, si ho voleu fer així. Això implica realitzar la comanda \verb+source tgkenv/bin/activate+ o similar prèviament]
+
+En \textbf{Django} podem començar l'estructura d'arxius amb la següent comanda:
+
+\begin{verbatim}
+(tgkenv) ~ $ django-admin startproject tgkhandson
+(tgkenv) ~ $ cd tgkhandson
+(tgkenv) ~/tgkhandson $ ./manage.py startapp benvinguda
+\end{verbatim}
+
+Després de realitzar les comandes anteriors haureu obtingut una estructura d'arxius que contindrà un projecte Django, amb una configuració inicial força raonable, i també haureu crear l'estructura d'arxius de l'aplicació de \verb+benvinguda+ que és la que programarem en aquest \emph{hands-on}.
+\end{document}

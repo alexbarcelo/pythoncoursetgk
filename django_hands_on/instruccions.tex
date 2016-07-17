@@ -6,6 +6,37 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{url}
+\usepackage{color}
+\usepackage{fullpage}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize\ttfamily, % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
 \author{Alex Barceló}
 \title{Curs de Python -- Telecogresca \\ {\sc Aplicació de frases de benvinguda}}
 \begin{document}
@@ -42,7 +73,7 @@ Ja podem obtenir el Django simplement utilitzant la comanda \verb+pip+ (sense \v
 
 \section{Inici del projecte}
 
-[Nota: assegureu-vos de tenir el \verb+virtualenv+ actiu, si ho voleu fer així. Això implica realitzar la comanda \verb+source tgkenv/bin/activate+ o similar prèviament]
+[Nota: assegureu-vos de tenir el \verb+virtualenv+ actiu, si ho voleu fer així. Això implica realitzar la comanda \verb+source tgkenv/bin/activate+ o similar prèviament, i fer-ho en totes les consoles que utilitzeu]
 
 En \textbf{Django} podem començar l'estructura d'arxius amb la següent comanda:
 
@@ -53,4 +84,123 @@ En \textbf{Django} podem començar l'estructura d'arxius amb la següent comanda
 \end{verbatim}
 
 Després de realitzar les comandes anteriors haureu obtingut una estructura d'arxius que contindrà un projecte Django, amb una configuració inicial força raonable, i també haureu crear l'estructura d'arxius de l'aplicació de \verb+benvinguda+ que és la que programarem en aquest \emph{hands-on}.
+
+Per a indicar que volem utilitzar l'aplicació \verb+benvinguda+ cal obrir l'arxiu \verb+settings.py+ i modificar la variable \verb+INSTALLED_APPS+, concretament:
+
+\begin{lstlisting}
+INSTALLED_APPS = [
+    'benvinguda',
+    'django.contrib.admin',
+    ...  # deixar la resta de linies iguals
+    
+\end{lstlisting}
+
+\section{Definició del model de dades}
+
+El primer que necessitarem és definir el model de dades que Django que s'utilitzarà per a guardar les frases de benvinguda. No cal tenir coneixements de SQL, de bases de dades, o similars; n'hi ha prou utilitzant els \verb+model+ de Django.
+
+El model de dades serà molt senzill, en el nostre cas. Només utilitzarem un cap \verb+missatge+, i deixarem (tot i que avui no mostrarem com utilitzar-ho) un camp \verb+only_anonymous+ que ens permetria en un futur filtrar les frases de benvinguda en funció si l'usuari està loggejat o encara no.
+
+Els models es defineixen a l'arxiu \verb+models.py+ (carpeta \verb+benvinguda+). El contingut del model pot ser el següent:
+
+\begin{lstlisting}
+class WelcomeFrase(models.Model):
+    """Sentences to greet the user.
+
+    The application contains a list of sentences and, 
+    randomly, one will be used in order to greet the 
+    user (at the main page).
+    """
+    class Meta(object):
+        verbose_name = "frase de benvinguda"
+        verbose_name_plural = "frases de benvinguda"
+
+    missatge = models.CharField('missatge', max_length=100)
+    only_anonymous = models.BooleanField('nomes per anonims', 
+                                         default=True)
+\end{lstlisting}
+
+Un cop hem definit el model (que és una simple classe Python) procedim a indicar a Django que volem utilitzar aquest model de dades. El que internament fa és crear les taules a la base de dades\footnote{En el nostre cas, Django estarà utilitzant una base de dades \textbf{SQLite}, que és molt adecuada per fer proves i per a desenvolupament però mai s'ha d'utilitzar en producció}, amb els seus camps, relacions, etc.
+
+El procediment és senzill:
+
+\begin{verbatim}
+(tgkenv) ~/tgkhandson $ ./manage.py makemigrations
+(tgkenv) ~/tgkhandson $ ./manage.py migrate
+\end{verbatim}
+
+L'operació està dividida en una preparació (\verb+makemigrations+) que comprova la consistència dels models i que la operació sigui correcte i l'execució dels canvis (\verb+migrate+). Per a una aplicació real, el \verb+makemigrations+ el realitzaria el desenvolupador i un cop comprovada la correctesa, l'administrador executaria \verb+migrate+ en el servidor i la base de dades de producció.
+
+\section{Introduïnt frases}
+
+Django té una interfície d'administració molt potent, i activada per defecte en les darreres versions. Per a utilitzar-la hem d'indicar que desitgem que el model de dades introduït prèviament sigui utilitzat en l'admin. Per a fer-ho hem d'afegir (deixeu les línies ja existents) el següent a l'arxiu \verb+benvinguda/admin.py+:
+
+\begin{lstlisting}
+from .models import WelcomeFrase
+
+admin.site.register(WelcomeFrase)
+\end{lstlisting}
+
+Creem un usuari administrador i iniciem el servidor de proves:
+
+\begin{verbatim}
+(tgkenv) ~/tgkhandson $ ./manage.py createsuperuser admin
+  <... completar les dades que se'ns demanen ...>
+(tgkenv) ~/tgkhandson $ ./manage.py runserver
+\end{verbatim}
+
+I ara ja podem accedir a la URL \url{http://127.0.0.1:8000/admin/} i introduir frases de benvinguda.
+
+\section{Preparant Controller i View}
+
+A continuació prepararem:
+\begin{description}
+\item[Controller] escull una frase aleatòria (o seguint certs criteris)
+\item[View] mostra al visitant la web, que contindrà la frase escollida
+\end{description}
+
+Vigileu que l'estructura clàssica Model-View-Controller en Django es conserva, però s'anomenen Model-Template-View. L'abús de la paraula \emph{view} sovint ocasiona certes confusions.
+
+Comencem repassant el codi del \verb+views.py+ (el típicament anomenat \emph{Controller}):
+
+\begin{lstlisting}
+from django.views.generic import TemplateView
+from benvinguda.models import WelcomeFrase
+from random import choice
+
+class HomeView(TemplateView):
+    """First page view."""
+    template_name = 'home.html'
+
+    def get(self, request, *args, **kwargs):
+        """Put the 'welcome' in context, template will show it."""
+        context = {
+            'welcome': choice(WelcomeFrase.objects.all()).missatge,
+        }
+        return self.render_to_response(context)
+\end{lstlisting}
+
+Veiem una selecció aleatòria molt simple. Un cop definida la variable \verb+context+, la feina és ara del \emph{template} per a generar el HTML que anirà a l'usuari (típicament, la capa de \emph{view} en un Model-View-Controller). L'arxiu s'ha d'anomenar \verb+home.html+ i el crearem a la carpeta \verb+benvinguda/templates+ amb el següent contingut:
+
+\begin{verbatim}
+<h1>{{ welcome }} </br><small>esca, esca, esca, Telecogresca!</small></h1>
+\end{verbatim}
+
+Sou lliures de millorar aquest template, però aquí utilitzo una mostra minimalista de template HTML quasi-vàlid (els navegadors ho acceptaran, tot i que no és un document vàlid en el seu estat actual).
+
+\section{Rutes}
+
+Ja quasi hem acabat, però si us hi fixeu encara no hem indicat quina URL haurà de mostrar la benvinguda. La relació entre URL i controladors associats s'acostuma a fer mitjançant l'arxiu \emph{urls.py}. La complexitat de les rutes pot ser molt alta, però per a l'exemple que estem realitzant, hi haurà prou modificant l'arxiu fins arribar al següent estat:
+
+\begin{lstlisting}
+from django.conf.urls import url
+from django.contrib import admin
+from benvinguda.views import HomeView
+
+urlpatterns = [
+    url(r'^benvinguda/', HomeView.as_view()),
+    url(r'^admin/', admin.site.urls),
+]
+\end{lstlisting}
+
 \end{document}

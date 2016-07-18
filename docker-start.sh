@@ -7,6 +7,7 @@ docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$TOKEN --name=proxy jupyter/c
 docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$TOKEN --name=tmpnb \
 	-v /var/run/docker.sock:/docker.sock jupyter/tmpnb \
 	python orchestrate.py \
+ 	        --pool-size=20 \
 		--image='alexbarcelo/pythoncoursetgk-notebook' \
 		--command='start-notebook.sh "\
 			--NotebookApp.base_url={base_path} \

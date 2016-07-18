@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[catalan]{babel}
 \usepackage{amsmath}
@@ -51,8 +51,8 @@ En el següents exemples suposaré que la carpeta de l'usuari és el directori d
 
 Si encara no tenim el mòdul \verb+virtualenv+ el podem aconseguir:
 \begin{itemize}
-\item En \textbf{Ubuntu} a través del paquet \verb+virtualenv+.
-\item En general, podem insta\lgem{}ar el mòdul a tot el sistema mitjançant la comanda \verb+sudo pip install virtualenv+
+\item En \textbf{Ubuntu} a través del paquet \verb+virtualenv+ (o \verb+python-virtualenv+ en versions més antigues d'Ubuntu).
+\item En general, podem insta\lgem{}ar el mòdul a tot el sistema mitjançant la comanda \\\verb+sudo pip install virtualenv+
 \end{itemize}
 
 Per a crear la carpeta que serà el nostre \emph{virtual environment} només cal executar:
@@ -120,7 +120,7 @@ class WelcomeFrase(models.Model):
                                          default=True)
 \end{lstlisting}
 
-Un cop hem definit el model (que és una simple classe Python) procedim a indicar a Django que volem utilitzar aquest model de dades. El que internament fa és crear les taules a la base de dades\footnote{En el nostre cas, Django estarà utilitzant una base de dades \textbf{SQLite}, que és molt adecuada per fer proves i per a desenvolupament però mai s'ha d'utilitzar en producció}, amb els seus camps, relacions, etc.
+Un cop hem definit el model (que és una simple classe Python) procedim a indicar a Django que volem utilitzar aquest model de dades. El que internament fa és crear les taules a la base de dades\footnote{En el nostre cas, Django estarà utilitzant una base de dades \textbf{SQLite}, que és molt adequada per fer proves i per a desenvolupament però mai s'ha d'utilitzar en producció}, amb els seus camps, relacions, etc.
 
 El procediment és senzill:
 
@@ -133,15 +133,19 @@ L'operació està dividida en una preparació (\verb+makemigrations+) que compro
 
 \section{Introduïnt frases}
 
-Django té una interfície d'administració molt potent, i activada per defecte en les darreres versions. Per a utilitzar-la hem d'indicar que desitgem que el model de dades introduït prèviament sigui utilitzat en l'admin. Per a fer-ho hem d'afegir (deixeu les línies ja existents) el següent a l'arxiu \verb+benvinguda/admin.py+:
+Django té una interfície d'administració molt potent, i activada per defecte en les darreres versions. Per a utilitzar-la hem d'indicar que desitgem que el model de dades introduït prèviament sigui utilitzat en l'admin. Per a fer-ho hem de modificar l'arxiu \verb+benvinguda/admin.py+, on registrarem el model anterior al mòdul. L'estat final de l'arxiu hauria de ser el següent:
 
 \begin{lstlisting}
+from django.contrib import admin
 from .models import WelcomeFrase
 
+# Register your models here.
 admin.site.register(WelcomeFrase)
 \end{lstlisting}
 
-Creem un usuari administrador i iniciem el servidor de proves:
+En el cas de que volguem donar opcions avançades a la interfície d'administració i funcionalitats addicionals, ho podrem fer ampliant el contingut d'aquest arxiu.
+
+Ara que ja tenim registrat el model de dades a l'\verb+admin+ només ens falta crear l'usuari administrador i iniciar el servidor de proves. Per a crear un usuari administrador ho farem amb la comanda \verb+createsuperuser+ com es mostra a continuació:
 
 \begin{verbatim}
 (tgkenv) ~/tgkhandson $ ./manage.py createsuperuser
@@ -150,10 +154,22 @@ Email address: admin@telecogresca.com
 Password: gre3skam0la
 Password (again): gre3skam0la
 Superuser created successfully.
-(tgkenv) ~/tgkhandson $ ./manage.py runserver
 \end{verbatim}
 
-I ara ja podem accedir a la URL \url{http://127.0.0.1:8000/admin/} (usuari \verb+admin+, contrasenya \verb+gr3skam0la+, o el que hagueu posat) i introduir frases de benvinguda.
+La comanda \verb+runserver+ serveix per a iniciar un servidor de desenvolupament:
+
+\begin{verbatim}
+(tgkenv) ~/tgkhandson $ ./manage.py runserver
+Performing system checks...
+
+System check identified no issues (0 silenced).
+July 18, 2016 - 12:32:01
+Django version 1.9, using settings 'tgkhandson.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+\end{verbatim}
+
+A la URL \url{http://127.0.0.1:8000/admin/} podrem introduir frases de benvinguda.
 
 \section{Preparant Controller i View}
 

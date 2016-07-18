@@ -11,7 +11,3 @@ node_modules/
 .sass-cache
 css/reveal.min.css
 js/reveal.min.js
-
-django_hands_on.*
-!django_hands_on.tex
-!django_hands_on.pdf

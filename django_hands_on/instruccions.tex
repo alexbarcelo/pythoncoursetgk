@@ -85,7 +85,7 @@ En \textbf{Django} podem començar l'estructura d'arxius amb la següent comanda
 
 Després de realitzar les comandes anteriors haureu obtingut una estructura d'arxius que contindrà un projecte Django, amb una configuració inicial força raonable, i també haureu crear l'estructura d'arxius de l'aplicació de \verb+benvinguda+ que és la que programarem en aquest \emph{hands-on}.
 
-Per a indicar que volem utilitzar l'aplicació \verb+benvinguda+ cal obrir l'arxiu \verb+settings.py+ i modificar la variable \verb+INSTALLED_APPS+, concretament:
+Per a indicar que volem utilitzar l'aplicació \verb+benvinguda+ cal obrir l'arxiu \verb+settings.py+ (carpeta \verb+tgkhandson+) i modificar la variable \verb+INSTALLED_APPS+, concretament:
 
 \begin{lstlisting}
 INSTALLED_APPS = [
@@ -144,12 +144,16 @@ admin.site.register(WelcomeFrase)
 Creem un usuari administrador i iniciem el servidor de proves:
 
 \begin{verbatim}
-(tgkenv) ~/tgkhandson $ ./manage.py createsuperuser admin
-  <... completar les dades que se'ns demanen ...>
+(tgkenv) ~/tgkhandson $ ./manage.py createsuperuser
+Username (leave blank to use 'pacorandom'): admin
+Email address: admin@telecogresca.com
+Password: gre3skam0la
+Password (again): gre3skam0la
+Superuser created successfully.
 (tgkenv) ~/tgkhandson $ ./manage.py runserver
 \end{verbatim}
 
-I ara ja podem accedir a la URL \url{http://127.0.0.1:8000/admin/} i introduir frases de benvinguda.
+I ara ja podem accedir a la URL \url{http://127.0.0.1:8000/admin/} (usuari \verb+admin+, contrasenya \verb+gr3skam0la+, o el que hagueu posat) i introduir frases de benvinguda.
 
 \section{Preparant Controller i View}
 
@@ -161,7 +165,7 @@ A continuació prepararem:
 
 Vigileu que l'estructura clàssica Model-View-Controller en Django es conserva, però s'anomenen Model-Template-View. L'abús de la paraula \emph{view} sovint ocasiona certes confusions.
 
-Comencem repassant el codi del \verb+views.py+ (el típicament anomenat \emph{Controller}):
+Comencem repassant el codi del \verb+views.py+ (el típicament anomenat \emph{Controller}, carpeta \verb+benvinguda+):
 
 \begin{lstlisting}
 from django.views.generic import TemplateView
@@ -190,7 +194,7 @@ Sou lliures de millorar aquest template, però aquí utilitzo una mostra minimal
 
 \section{Rutes}
 
-Ja quasi hem acabat, però si us hi fixeu encara no hem indicat quina URL haurà de mostrar la benvinguda. La relació entre URL i controladors associats s'acostuma a fer mitjançant l'arxiu \emph{urls.py}. La complexitat de les rutes pot ser molt alta, però per a l'exemple que estem realitzant, hi haurà prou modificant l'arxiu fins arribar al següent estat:
+Ja quasi hem acabat, però si us hi fixeu encara no hem indicat quina URL haurà de mostrar la benvinguda. La relació entre URL i controladors associats s'acostuma a fer mitjançant l'arxiu \emph{urls.py} (carpeta \verb+tgkhandson+). La complexitat de les rutes pot ser molt alta, però per a l'exemple que estem realitzant, hi haurà prou modificant l'arxiu fins arribar al següent estat:
 
 \begin{lstlisting}
 from django.conf.urls import url
@@ -202,5 +206,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
 \end{lstlisting}
+
+Per veure l'aplicació acabada només cal fer (si heu apagat el servidor):
+\begin{verbatim}
+(tgkenv) ~/tgkhandson $ ./manage.py runserver
+\end{verbatim}
+
+I ara ja podem accedir a la URL \url{http://127.0.0.1:8000/benvinguda/} i podrem veure les frases de benvinguda.
 
 \end{document}
